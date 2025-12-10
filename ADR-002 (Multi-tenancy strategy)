@@ -1,1 +1,19 @@
+Context
+The system must support multiple large tenants (e.g., banks, telecoms, airlines) while ensuring strict data isolation, scalability, and compliance with GDPR. The challenge is choosing the right multi-tenant database strategy.
 
+Decision
+Adopt a shared database with tenant-scoped tables, using a tenant_id column on all tenant-specific records. The application enforces isolation at the service and repository layers.
+
+Rationale
+Reduces operational overhead (one DB rather than many)
+Supports high-volume tenants with optimised indexes
+Allows simpler reporting and backups
+Avoids code duplication required in separate-DB-per-tenant models
+
+Consequences
+Strong tenant filtering is mandatory on all queries
+Security testing must validate no cross-tenant leakage
+Future scaling to per-tenant databases remains possible
+Alternatives Considered
+Dedicated DB per tenant → higher cost, complex migrations
+Schema-per-tenant → increases maintenance overhead
