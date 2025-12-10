@@ -1,1 +1,20 @@
+Context
+The CMS requires secure authentication across web, mobile, and API channels. Tokens must carry tenant identity and user roles.
 
+Decision
+Use JSON Web Tokens (JWT) issued by an external Authentication Service (e.g., Azure AD / corporate IdP).
+
+Rationale
+Standardised, stateless authentication
+Encodes tenant ID and user roles for RBAC checks
+Supports SSO and MFA
+Works well across micro front-ends and future services
+
+Consequences
+Token validation must occur on every request
+Token expiry and refresh must be handled at gateway
+Sensitive claims must never be trusted without signature verification
+
+Alternatives Considered
+Session-based auth → not suitable for distributed systems
+API keys → no role or identity context
