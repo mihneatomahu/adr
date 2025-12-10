@@ -1,1 +1,20 @@
+Context
+Different tenants require different SLA rules (e.g., 24-hour resolution for banking fraud complaints, 72-hour for telecom outages). SLA logic must be flexible, configurable, and auditable.
 
+Decision
+Use an SLA Calculator module that computes due dates and priority from a tenant-specific SLA_CONFIG table.
+
+Rationale
+Centralises SLA logic in a single component
+Supports tenant-specific variations without branching code
+Easy to test and evolve
+Works cleanly with Workflow Engine and ComplaintService
+
+Consequences
+Complaints must always resolve category/channel → SLA_CONFIG mapping
+Incorrect configuration can affect priority calculations
+Requires validation on admin-side SLA updates
+
+Alternatives Considered
+Hard-coding SLA rules → unmaintainable
+Storing SLA rules in code → requires redeploy on every tenant change
