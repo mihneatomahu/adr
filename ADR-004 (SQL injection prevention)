@@ -1,1 +1,20 @@
+Context
+The CMS stores sensitive personal data. SQL injection is a critical security risk, and queries must handle tenant and user parameters safely.
 
+Decision
+Use parameterised SQL statements for all database operations within the repository layer. Manual string concatenation is forbidden.
+
+Rationale
+Eliminates SQL injection vulnerabilities
+Ensures tenant filtering is applied correctly
+Supports prepared statements for performance
+Aligns with security best practices (OWASP)
+
+Consequences
+Repository layer must define strong typed interfaces
+Developers need to avoid dynamic SQL generation
+Slightly more verbose code, but safer
+
+Alternatives Considered
+ORM → too heavy for project scope, added complexity
+Unparameterised raw SQL → unacceptable security risk
