@@ -1,1 +1,19 @@
+Context
+Complaint statuses follow strict transitions (New → In Progress → Resolved → Closed). Different tenants may extend workflows in future. Hard-coding these transitions spreads logic across controllers and services.
 
+Decision
+Introduce a Workflow Engine component responsible for validating and executing complaint state transitions.
+
+Rationale
+Centralises business rules
+Prevents invalid transitions (e.g., Closed → New)
+Supports audits and SLA recalculation during transitions
+Easily extendable for future complexity
+
+Consequences
+All state changes must pass through the engine
+Extra abstraction layer but improves maintainability
+Requires clear configuration for allowed transitions
+Alternatives Considered
+Hard-coding transitions in the service → brittle and duplicated
+Storing transitions in DB → too complex for initial implementation
